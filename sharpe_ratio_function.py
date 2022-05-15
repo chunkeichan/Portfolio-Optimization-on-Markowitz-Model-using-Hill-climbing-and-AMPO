@@ -80,15 +80,15 @@ def findRisk(df, stocklist, weighting, rec=0):
     return risk
 
 
-def findSharpratio(variables, rec=0):
-    """Sharp ratio of the portfolio"""
+def findSharperatio(variables, rec=0):
+    """Sharpe ratio of the portfolio"""
     Ri = findRi(stocklist, rec)
     weighting = variables
     risk = findRisk(df, stocklist, weighting, rec)
-    sharpRatio = (np.dot(Ri, weighting) - risk_free_rate) / risk
-    print("Sharp Ratio: %s" % sharpRatio)
+    sharpeRatio = (np.dot(Ri, weighting) - risk_free_rate) / risk
+    print("Sharpe Ratio: %s" % sharpeRatio)
 
-    return sharpRatio
+    return sharpeRatio
 
 
 def eqconstHandler(variables):
@@ -108,22 +108,22 @@ def eqconstHandler(variables):
         return [0 for x in variables]
 
 
-def inputSharpratio(variables):
-    """AMPO is an optimization method for finding the minimum fitness. To suit the calculations of AMPO, the return value was modified to 1/Sharp Ratio."""
+def inputSharperatio(variables):
+    """AMPO is an optimization method for finding the minimum fitness. To suit the calculations of AMPO, the return value was modified to 1/Sharpe Ratio."""
     eqconsts = eqconstHandler(variables)
-    sr = findSharpratio(eqconsts)
+    sr = findSharperatio(eqconsts)
     if sr <= 0:
         sr = 10**(-10)
 
     return 1 / sr
 
 
-def verifySharpratio(variables, rec=0):
-    """To verify the sharp ratio of the portfolio"""
+def verifySharperatio(variables, rec=0):
+    """To verify the sharpe ratio of the portfolio"""
     Ri = findRi(stocklist, rec)
     weighting = variables
     risk = findRisk(df, stocklist, weighting, rec)
-    sharpRatio = (np.dot(Ri, weighting) - risk_free_rate) / risk
-    print("Sharp Ratio: %s" % sharpRatio)
+    sharpeRatio = (np.dot(Ri, weighting) - risk_free_rate) / risk
+    print("Sharpe Ratio: %s" % sharpRatio)
 
-    return sharpRatio, np.dot(Ri, weighting), risk
+    return sharpeRatio, np.dot(Ri, weighting), risk
